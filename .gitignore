@@ -1,2 +1,12 @@
-__pycache__
+# Environment
+
 .env
+
+# Poetry
+
+poetry.lock
+
+# Python
+
+__pycache__
+
