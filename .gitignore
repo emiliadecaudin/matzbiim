@@ -1,3 +1,7 @@
+# Data
+
+data/
+
 # Environment
 
 .env
@@ -8,5 +12,5 @@ poetry.lock
 
 # Python
 
-__pycache__
+__pycache__/
 

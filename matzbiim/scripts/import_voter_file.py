@@ -6,7 +6,7 @@ from io import TextIOWrapper
 
 from tqdm import tqdm
 
-from nyc_prevan.util import find_and_select_file
+from ..utils import find_and_select_file
 
 # --- Constants ---------------------------------------------------------------------- #
 

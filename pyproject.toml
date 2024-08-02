@@ -7,11 +7,14 @@ license = "Copyright (c) Émilia Decaudin"
 
 [tool.poetry.dependencies]
 python = "^3.12"
+inquirer = "^3.3.0"
+tqdm = "^4.66.4"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.10.0"
 pre-commit = "^3.7.1"
 ruff = "^0.4.9"
+types-tqdm = "^4.66.0.20240417"
 
 [tool.mypy]
 disallow_untyped_defs = true
@@ -21,6 +24,10 @@ warn_return_any = true
 warn_unused_ignores = true
 check_untyped_defs = true
 files = "matzbiim"
+
+[[tool.mypy.overrides]]
+module = "inquirer"
+ignore_missing_imports = true
 
 [tool.ruff]
 target-version = "py312"
