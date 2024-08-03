@@ -5,7 +5,6 @@ This module contains the Handler decorator factory.
 # --- Imports ------------------------------------------------------------------------ #
 
 from collections.abc import Callable
-from functools import wraps
 from typing import overload
 
 # --- Constants ---------------------------------------------------------------------- #
@@ -48,19 +47,14 @@ class Handler:
         self, func_or_column: HANDLER_SIGNATURE | str | None = None
     ) -> HANDLER_SIGNATURE | Callable[[HANDLER_SIGNATURE], HANDLER_SIGNATURE]:
         if callable(func_or_column):
-            self._handlers.append((func_or_column.__name__, func_or_column))
-            return func_or_column
+            func = func_or_column
+            self._handlers.append((func.__name__, func))
+            return func
 
         else:
 
             def decorator(func: HANDLER_SIGNATURE) -> HANDLER_SIGNATURE:
-                c = func_or_column or func.__name__
-                self._handlers.append((c, func))
-
-                @wraps(func)
-                def wrapper(value: HANDLER_ARGUMENT_TYPE) -> HANDLER_RETURN_TYPE:
-                    return func(value)
-
-                return wrapper
+                self._handlers.append((func_or_column or func.__name__, func))
+                return func
 
             return decorator
