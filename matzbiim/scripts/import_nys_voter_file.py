@@ -6,7 +6,7 @@ from io import TextIOWrapper
 
 from tqdm import tqdm
 
-from ..utils import find_and_select_file
+from matzbiim.utils import find_and_select_file
 
 # --- Constants ---------------------------------------------------------------------- #
 
@@ -52,7 +52,7 @@ ORIGINAL_COLUMNS = [  #                 Original Name     Type        Descriptio
     "id_required",  #                   IDREQUIRED        CHAR(1)     Identification Required Flag.
     "id_met",  #                        IDMET             CHAR(1)     Identification Verification Requirement Met Flag.
     "registration_source",  #           VRSOURCE          CHAR(10)    Application Source
-    "registration_status",  #           STATUS            CHAR10      Voter Status Codes.
+    "registration_status",  #           STATUS            CHAR(10)    Voter Status Codes.
     "registration_status_reason",  #    REASONCODE        CHAR(15)    Status Reason Codes
     "inactive_date",  #                 INACT_DATE        CHAR(8)     Date Voter made ”Inactive”, YYYYMMDD
     "purge_date",  #                    PURGE_DATE        CHAR(8)     Date voter was “Purged”, YYYYMMDD
@@ -87,7 +87,7 @@ def count_rows(csv_file: TextIOWrapper) -> int | None:
             "Counting rows... (This will take a few minutes. Press C-c to continue without knowing the total number of rows.)"
         )
 
-        return sum(1 for row in csv_file)
+        return len(csv_file.readlines())
 
     return None
 
