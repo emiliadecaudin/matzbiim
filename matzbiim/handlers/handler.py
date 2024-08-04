@@ -36,11 +36,8 @@ class Handler:
     @overload
     def __call__(self, func_or_column: str) -> META_HANDLER_SIGNATURE: ...
 
-    @overload
-    def __call__(self) -> META_HANDLER_SIGNATURE: ...
-
     def __call__(
-        self, func_or_column: HANDLER_SIGNATURE | str | None = None
+        self, func_or_column: HANDLER_SIGNATURE | str
     ) -> HANDLER_SIGNATURE | META_HANDLER_SIGNATURE:
         if callable(func_or_column):
             func = func_or_column
@@ -50,7 +47,8 @@ class Handler:
         else:
 
             def decorator(func: HANDLER_SIGNATURE) -> HANDLER_SIGNATURE:
-                self._handlers.append((func_or_column or func.__name__, func))
+                column = func_or_column
+                self._handlers.append((column, func))
                 return func
 
             return decorator
