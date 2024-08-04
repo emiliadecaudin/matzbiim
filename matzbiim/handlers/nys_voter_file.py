@@ -13,11 +13,7 @@ nysboe_handler = Handler()
 # --- Handler Functions -------------------------------------------------------------- #
 
 
+@nysboe_handler("first_name")
 @nysboe_handler("last_name")
-def last_name(value: str) -> str:
-    return value
-
-
-@nysboe_handler
-def first_name(value: str) -> str:
+def default(value: str) -> str:
     return value
