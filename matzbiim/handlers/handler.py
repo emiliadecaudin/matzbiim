@@ -30,18 +30,15 @@ class Handler:
         self._handlers = []
 
     @overload
-    def __call__(self, func_or_column: HANDLER_SIGNATURE) -> HANDLER_SIGNATURE:
-        pass
+    def __call__(self, func_or_column: HANDLER_SIGNATURE) -> HANDLER_SIGNATURE: ...
 
     @overload
     def __call__(
         self, func_or_column: str
-    ) -> Callable[[HANDLER_SIGNATURE], HANDLER_SIGNATURE]:
-        pass
+    ) -> Callable[[HANDLER_SIGNATURE], HANDLER_SIGNATURE]: ...
 
     @overload
-    def __call__(self) -> Callable[[HANDLER_SIGNATURE], HANDLER_SIGNATURE]:
-        pass
+    def __call__(self) -> Callable[[HANDLER_SIGNATURE], HANDLER_SIGNATURE]: ...
 
     def __call__(
         self, func_or_column: HANDLER_SIGNATURE | str | None = None
