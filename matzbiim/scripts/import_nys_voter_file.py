@@ -6,6 +6,8 @@ from io import TextIOWrapper
 
 from tqdm import tqdm
 
+from matzbiim.exceptions import SkipElement
+from matzbiim.handlers import nysboe_handler
 from matzbiim.utils import find_and_select_file
 
 # --- Constants ---------------------------------------------------------------------- #
@@ -92,12 +94,6 @@ def count_rows(csv_file: TextIOWrapper) -> int | None:
     return None
 
 
-def process_last_name(last_name: str) -> str:
-    return last_name[::-1]
-
-
-processors = {"last_name": process_last_name}
-
 # --- Routines ----------------------------------------------------------------------- #
 
 
@@ -135,11 +131,16 @@ def csv_iterate(input_path: str) -> None:
         )
 
         for voter in voters:
-            if voter["registration_status"] == "P":
-                continue
+            try:
+                for column, value in voter.items():
+                    try:
+                        voter[column] = nysboe_handler.handle(column, value)
 
-            for field, processor in processors.items():
-                voter[field] = processor(voter[field])
+                    except NotImplementedError:
+                        continue
+
+            except SkipElement:
+                continue
 
             try:
                 csv_writer.writerow(voter)

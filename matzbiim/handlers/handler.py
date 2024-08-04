@@ -55,6 +55,6 @@ class Handler:
 
     def handle(self, column: str, value: HANDLER_ARGUMENT_TYPE) -> HANDLER_RETURN_TYPE:
         if column not in self._handlers:
-            raise NotImplementedError
+            raise NotImplementedError(f"No handler present for column `{column}`.")
         else:
             return self._handlers[column](value)
