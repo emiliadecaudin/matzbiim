@@ -12,6 +12,7 @@ from typing import overload
 HANDLER_ARGUMENT_TYPE = str
 HANDLER_RETURN_TYPE = str
 HANDLER_SIGNATURE = Callable[[HANDLER_ARGUMENT_TYPE], HANDLER_RETURN_TYPE]
+META_HANDLER_SIGNATURE = Callable[[HANDLER_SIGNATURE], HANDLER_SIGNATURE]
 
 # --- Class -------------------------------------------------------------------------- #
 
@@ -33,16 +34,14 @@ class Handler:
     def __call__(self, func_or_column: HANDLER_SIGNATURE) -> HANDLER_SIGNATURE: ...
 
     @overload
-    def __call__(
-        self, func_or_column: str
-    ) -> Callable[[HANDLER_SIGNATURE], HANDLER_SIGNATURE]: ...
+    def __call__(self, func_or_column: str) -> META_HANDLER_SIGNATURE: ...
 
     @overload
-    def __call__(self) -> Callable[[HANDLER_SIGNATURE], HANDLER_SIGNATURE]: ...
+    def __call__(self) -> META_HANDLER_SIGNATURE: ...
 
     def __call__(
         self, func_or_column: HANDLER_SIGNATURE | str | None = None
-    ) -> HANDLER_SIGNATURE | Callable[[HANDLER_SIGNATURE], HANDLER_SIGNATURE]:
+    ) -> HANDLER_SIGNATURE | META_HANDLER_SIGNATURE:
         if callable(func_or_column):
             func = func_or_column
             self._handlers.append((func.__name__, func))
