@@ -31,13 +31,13 @@ class Handler:
         self._handlers = {}
 
     @overload
-    def __call__(self, func_or_column: HANDLER_SIGNATURE) -> HANDLER_SIGNATURE: ...
+    def __call__(self, func: HANDLER_SIGNATURE) -> HANDLER_SIGNATURE: ...
 
     @overload
-    def __call__(self, func_or_column: str) -> META_HANDLER_SIGNATURE: ...
+    def __call__(self, column: str) -> META_HANDLER_SIGNATURE: ...
 
     def __call__(
-        self, func_or_column: HANDLER_SIGNATURE | str
+        self, *args, **kwargs
     ) -> HANDLER_SIGNATURE | META_HANDLER_SIGNATURE:
         if callable(func_or_column):
             func = func_or_column

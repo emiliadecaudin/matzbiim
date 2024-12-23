@@ -122,7 +122,7 @@ def csv_iterate(input_path: str) -> None:
 
         csv_writer.writeheader()
 
-        voters = tqdm(
+        voters: tqdm[dict[str, str]] = tqdm(
             csv_reader,
             total=row_count,
             desc="Processing voters... ",
